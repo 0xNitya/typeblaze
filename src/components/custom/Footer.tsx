@@ -40,12 +40,12 @@ export function Footer() {
         </div>
         <div className="mt-8 text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} TypeBlaze. All rights reserved.</p>
-          {/* <p className="mt-2">
+          <p className="mt-2">
             Designed and Developed with ❤️ by{' '}
             <a href="https://github.com/Nityanand17" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Nityanand</a>
             {' '}
            
-          </p> */}
+          </p>
         </div>
       </div>
     </footer>
