@@ -2,85 +2,85 @@ const sampleParagraphs = {
   "paragraphs": [
     {
       "id": 1,
-      "text": "The sound of waves crashing on the shore creates a soothing melody. Seagulls glide above the water, searching for food. The salty breeze refreshes the mind, and the golden sand warms the feet. Children build sandcastles while surfers ride the rolling waves with skill."
+      "text": "the beach is a calm place to rest waves are soft the sand is warm and the wind is cool people love to swim build in sand or just sit and enjoy the view the sunsets are bright and colorful and sometimes you may even see dolphins swimming in the sea"
     },
     {
       "id": 2,
-      "text": "A quiet forest path winds through towering trees. Sunlight filters through the leaves, creating a beautiful dance of shadows. Birds sing their cheerful songs, and the scent of pine fills the air. Every step on the soft ground feels like an adventure waiting to unfold."
+      "text": "a forest is quiet and full of life birds sing and the trees move with the wind sunlight comes through the trees making the ground glow you can walk on soft paths and hear the sounds of nature you might even see small animals like rabbits or deer hiding nearby"
     },
     {
       "id": 3,
-      "text": "Standing atop a mountain peak, the world stretches out endlessly. Valleys and rivers weave through the landscape like an artist’s masterpiece. The air is crisp and pure, filling the lungs with energy. Each step on the rocky trail brings a sense of accomplishment and wonder."
+      "text": "mountains are big and full of beauty people hike or climb them to enjoy fresh air and amazing views in spring flowers bloom and cover the hills in winter they are covered in snow making them perfect for skiing the top of a mountain shows how wide and vast the world is"
     },
     {
       "id": 4,
-      "text": "The city is a whirlwind of energy with its flashing lights and honking cars. Skyscrapers touch the clouds while people rush to their destinations. Street performers entertain crowds, and food stalls offer delicious scents. Despite the hustle, every corner holds a story waiting to be discovered."
+      "text": "cities are full of people and fun things to do there are tall homes parks and busy streets shops are everywhere and you can always find new foods to try at night the lights make the city bright and alive some parks offer quiet spots to rest from the busy day"
     },
     {
       "id": 5,
-      "text": "The vast ocean holds mysteries beneath its surface. Schools of fish glide through coral reefs while dolphins leap joyfully. The waves whisper ancient secrets, carrying them to the shore. Every drop of water connects creatures big and small in a delicate balance of life."
+      "text": "the ocean is huge and has so many fish and plants people love to swim sail or even dive under the water to see life dolphins turtles and colorful fish live there we need to keep the water clean and safe so the ocean can stay full of life for years to come"
     },
     {
       "id": 6,
-      "text": "Technology connects us to people across the world in an instant. Messages travel at the speed of light, bringing distant voices closer. While screens bring knowledge and entertainment, real-life conversations remain irreplaceable. Balance is key to making the most of modern inventions."
+      "text": "phones and computers help us stay close to others even far away they make work and school easy to manage but they can also be hard to handle when used too much it is good to take breaks go outside and talk to people face to face when possible"
     },
     {
       "id": 7,
-      "text": "Taking care of the planet is a shared responsibility. Planting trees, reducing waste, and saving energy all contribute to a better future. Even small actions can create a ripple effect, leading to a cleaner and greener world. Together, we can protect our home."
+      "text": "saving the earth means using less and helping more we can plant trees save water and use less power solar energy from the sun and windmills can make clean power if we all work together we can make the earth a better home for animals plants and people"
     },
     {
       "id": 8,
-      "text": "Artificial intelligence is changing the world in fascinating ways. It helps doctors diagnose illnesses, assists in predicting the weather, and even composes music. However, it is important to use AI responsibly to ensure it benefits everyone. Technology must always be guided by ethical values."
+      "text": "ai helps people work faster and smarter it can read big data and give quick answers doctors use it to find health problems and stores use it to help people shop but ai must be fair and people need to guide it to make sure it does good things"
     },
     {
       "id": 9,
-      "text": "The human brain is a powerhouse of creativity and intelligence. It allows us to solve problems, dream about the future, and feel emotions. Every new experience shapes the mind, helping it grow stronger. Learning never stops, and curiosity fuels endless possibilities."
+      "text": "the brain helps us think and feel in smart ways it works with the body to move learn and grow people study the brain to help solve sadness and stress with new ideas we can find better ways to stay happy and healthy while making smarter choices in life"
     },
     {
       "id": 10,
-      "text": "Climate change is reshaping the planet in unexpected ways. Ice caps are melting, temperatures are rising, and storms are becoming more intense. Sustainable choices, like using renewable energy and reducing pollution, can help slow down these changes. Every effort matters for a brighter future."
+      "text": "the weather is changing fast and this is not good for animals or people ice is melting and some animals are losing their homes we need to use clean power save trees and drive less to help small actions like these can make a big change over time"
     },
     {
       "id": 11,
-      "text": "A garden is a sanctuary filled with vibrant colors and life. Butterflies dance among the flowers, and bees buzz from bloom to bloom. Growing your own fruits and vegetables brings joy and nourishment. Nature’s beauty flourishes when given care and attention."
+      "text": "gardens are full of colors with flowers fruits and trees birds and bees visit to help plants grow people enjoy sitting in gardens to relax or read planting a garden at home can be fun and gives fresh fruits and veggies to eat it also helps keep the air clean"
     },
     {
       "id": 12,
-      "text": "Rivers carve paths through the land, bringing life wherever they flow. Fishermen cast their nets, hoping for a good catch. Birds skim the surface, searching for food. Keeping rivers clean is crucial for the survival of countless species that depend on their waters."
+      "text": "rivers flow with fresh water for plants animals and people people swim fish and sail on rivers they bring life to the land around them keeping rivers clean is important for the health of all living things trash and waste must be kept far from these precious waters"
     },
     {
       "id": 13,
-      "text": "After a rainstorm, a rainbow paints the sky with its brilliant hues. Each color blends into the next, creating a breathtaking sight. People stop to admire the natural wonder, smiling as they make silent wishes. It is a reminder that beauty often follows the storm."
+      "text": "rainbows are a magical sight after rain they appear when sunlight hits water drops in the air kids and adults love looking for all the colors in a rainbow they remind us how beautiful nature is seeing one can make any rainy day feel bright and cheerful again"
     },
     {
       "id": 14,
-      "text": "Books are doors to different worlds, filled with adventure and knowledge. A single page can transport a reader to the depths of the ocean or the farthest stars. Stories spark imagination and inspire new ideas. Reading is a journey that never truly ends."
+      "text": "books open up a world of stories and knowledge they let us travel to new places and meet new people in our minds reading helps us learn new words and ideas you can read about animals space or fun adventures books are like doors to exciting new worlds"
     },
     {
       "id": 15,
-      "text": "Playing sports builds strength, teamwork, and determination. Running across the field, dribbling a ball, or swimming through cool water all bring excitement. Victory feels rewarding, but the real joy comes from participation. Sports bring people together, fostering friendships and fun."
+      "text": "sports are fun and help keep the body strong people love to play soccer run or swim playing in teams teaches sharing and working together sports also make us happy and give us energy everyone can find a sport they enjoy and it is a great way to make friends"
     },
     {
       "id": 16,
-      "text": "Clouds drift lazily across the sky, forming shapes that spark the imagination. Some resemble castles, while others look like animals on a great journey. As the sun sets, they turn shades of pink and gold, painting a masterpiece in the sky."
+      "text": "clouds in the sky are soft and white floating high above us sometimes they are gray and bring rain watching clouds is calming and they can look like animals or shapes when the sun sets clouds turn orange and pink making the sky look like a big painting"
     },
     {
       "id": 17,
-      "text": "The desert may seem empty, but it is teeming with life. Cacti store water for dry days, while foxes and snakes adapt to the heat. At night, the sky fills with stars, shining brighter than in any city. The desert is a land of quiet resilience."
+      "text": "the desert is dry and sandy but it is full of life cacti store water and animals like lizards live there deserts are very hot in the day and cool at night people visit to see the wide open land and the clear stars shining bright in the dark sky"
     },
     {
       "id": 18,
-      "text": "Farms are the heart of food production, where crops grow under the sun’s watchful eye. Farmers wake up early to care for their animals and fields. A fresh harvest brings satisfaction, knowing that hard work has paid off. Every meal has a story that starts on a farm."
+      "text": "farms are where food is grown farmers work hard to plant and care for crops there are animals like cows hens and sheep that give us milk eggs and wool visiting a farm teaches how food reaches our tables and shows how much care is needed for it"
     },
     {
       "id": 19,
-      "text": "Zoos are places of learning and conservation. Visitors marvel at lions, giraffes, and penguins from distant lands. Scientists work to protect endangered species and restore habitats. Seeing these creatures up close deepens our appreciation for wildlife and the need to protect it."
+      "text": "the zoo is a fun place to see animals from around the world lions elephants and penguins live there zoos teach us about animals and how to care for them they also help save animals that are in danger kids and adults love to visit and learn at zoos"
     },
     {
       "id": 20,
-      "text": "A clear night sky is a gateway to the universe’s wonders. Stars twinkle like tiny lanterns, and planets shine in the distance. With a telescope, the rings of Saturn and the craters of the moon come into view. The cosmos is a vast mystery waiting to be explored."
+      "text": "the sky at night is full of stars and wonders people use telescopes to see planets and moons the moon glows bright and shooting stars make wishes fun stargazing is peaceful and helps us feel small but part of a big beautiful universe filled with mysteries to explore"
     }
   ]
 };
 
-export default sampleParagraphs;
+export default sampleParagraphs; 
