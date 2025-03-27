@@ -132,8 +132,8 @@ export default function TypingTest() {
                       className={
                         index < typedText.length
                           ? typedText[index] === char
-                            ? "text-green-500 dark:text-gray-200"
-                            : "text-red-500"
+                            ? "text-blue-700 dark:text-gray-200"
+                            : "text-red-800"
                           : "text-gray-500"
                       }
                     >

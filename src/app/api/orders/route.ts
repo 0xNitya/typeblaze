@@ -32,7 +32,7 @@ export async function POST(request: NextRequest, response: NextResponse)
 
         // Create Razorpay order
         const order = await razorpay.orders.create({
-            amount: 900 * 100, // Convert ₹9 to paisa
+            amount: 9 * 100, // Convert ₹9 to paisa
             currency: 'INR',
             receipt: `receipt-${Date.now()}`,
             notes: {
