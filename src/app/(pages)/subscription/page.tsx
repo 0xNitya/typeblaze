@@ -1,7 +1,7 @@
 "use client";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import useAuthStore from "@/store/useStore";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -13,25 +13,68 @@ export default function SubscriptionPage() {
   const { isAuthenticated } = useAuthStore();
   const [isHovered, setIsHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [razorpayLoaded, setRazorpayLoaded] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Load Razorpay script
+  useEffect(() => {
+    const loadRazorpayScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = () => setRazorpayLoaded(true);
+      script.onerror = () => {
+        console.error("Failed to load Razorpay script");
+        setErrorMessage("Payment gateway failed to load. Please try again later.");
+      };
+      document.body.appendChild(script);
+    };
+
+    // Detect if user is on mobile
+    const checkIfMobile = () => {
+      const userAgent = navigator.userAgent.toLowerCase();
+      setIsMobile(
+        /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent)
+      );
+    };
+
+    loadRazorpayScript();
+    checkIfMobile();
+
+    return () => {
+      // Cleanup if needed
+      const existingScript = document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]');
+      if (existingScript) {
+        // Just mark as loaded instead of removing, in case other components need it
+        setRazorpayLoaded(true);
+      }
+    };
+  }, []);
 
   const handleCheckOut = async () => {
+    // Reset error message
+    setErrorMessage(null);
+    
     try {
       setIsLoading(true);
+
+      if (!razorpayLoaded) {
+        throw new Error("Payment gateway not loaded. Please refresh the page.");
+      }
 
       // Step 1: Create order on the backend
       const res = await axios.post("/api/orders", { productId, varient });
 
       if (!res.data.razorpayOrder || !res.data.razorpayOrder.id) {
-        alert("Failed to create Razorpay order. Please try again.");
-        setIsLoading(false);
-        return;
+        throw new Error("Failed to create payment order. Please try again.");
       }
 
       const { razorpayOrder, order } = res.data;
 
-      // Step 2: Configure Razorpay options
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "", // Ensure it's set in .env.local
+      // Step 2: Configure Razorpay options with better mobile handling
+      const options: any = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "", // Using public env var
         amount: razorpayOrder.amount,
         currency: razorpayOrder.currency,
         name: "TypeBlaze",
@@ -49,27 +92,40 @@ export default function SubscriptionPage() {
               alert("Payment Successful! Subscription Activated.");
               window.location.reload();
             } else {
-              alert("Payment Verification Failed. Please contact support.");
+              setErrorMessage("Payment verification failed. Please contact support.");
             }
           } catch (error) {
             console.error("Verification Error:", error);
-            alert("An error occurred during payment verification. Please try again.");
+            setErrorMessage("Payment verification failed. Please try again or contact support.");
           }
         },
-        prefill: {
-          name: "Nityanand Yadav",
-          email: "nityanandyadav2324@gmail.com",
-          contact: "6203439160",
+        modal: {
+          ondismiss: function() {
+            setIsLoading(false);
+          },
+          escape: true,
         },
-        theme: { color: "#3399cc" },
+        theme: { 
+          color: "#3399cc",
+        },
       };
+
+      // Add mobile-specific options for better compatibility
+      if (isMobile) {
+        options.theme.backdrop_color = "#000000";
+        options.display_logo = false; // Reduces load time on mobile
+      }
 
       // Step 3: Open Razorpay checkout
       const razorpay = new (window as any).Razorpay(options);
+      razorpay.on('payment.failed', function (response: any) {
+        setErrorMessage("Payment failed. Please try again.");
+        setIsLoading(false);
+      });
       razorpay.open();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Order Creation Error:", error);
-      alert("Something went wrong. Please try again.");
+      setErrorMessage(error.message || "Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -115,15 +171,28 @@ export default function SubscriptionPage() {
                 </li>
               ))}
             </ul>
+            
+            {errorMessage && (
+              <div className="mt-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-md text-red-700 dark:text-red-300 text-sm flex items-center">
+                <AlertCircle className="mr-2 h-4 w-4" />
+                {errorMessage}
+              </div>
+            )}
           </CardContent>
           <CardFooter>
             {isAuthenticated ? (
               <Button
                 onClick={handleCheckOut}
                 className="w-full rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 transition duration-300"
-                disabled={isLoading}
+                disabled={isLoading || !razorpayLoaded}
               >
-                {isLoading ? <Loader2 className="animate-spin" /> : "Get Lifetime Access"}
+                {isLoading ? (
+                  <Loader2 className="animate-spin mr-2" />
+                ) : !razorpayLoaded ? (
+                  "Loading Payment Gateway..."
+                ) : (
+                  "Get Lifetime Access"
+                )}
               </Button>
             ) : (
               <TooltipProvider>
