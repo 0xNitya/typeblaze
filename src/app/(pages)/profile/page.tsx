@@ -27,40 +27,63 @@ type User = {
   achievement: string[];
 }
 
-async function getProfileData() {
-  
+// Define interface for the API response
+interface ProfileResponse {
+  message: string;
+  user: User;
+}
+
+async function getProfileData(): Promise<User | null> {
   try {
-    const response = await axios.get('/api/profile');
+    const response = await axios.get<ProfileResponse>('/api/profile');
     toast.success('Profile fetched successfully');
-    return response.data.user || {}; 
+    return response.data.user;
   } catch (error) {
     toast.error('login to view profile');
     console.error('Failed to fetch profile data:', error);
-    return {}; 
+    return null;
   }
 }
 
 export default function ProfilePage() {
   const router = useRouter();
-  const [userData, setUserData] = React.useState<User>();
+  const [userData, setUserData] = React.useState<User | null>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     async function fetchData() {
       const data = await getProfileData();
-      if(!data._id) {
+      if(!data || !data._id) {
         router.push('/login');
+      } else {
+        setUserData(data);
       }
-      setUserData(data);
-      
+      setIsLoading(false);
     }
     fetchData();
-  }, []);
+  }, [router]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin text-blue-500">
+          <Loader2 />
+        </div>
+      </div>
+    );
+  }
 
   if (!userData) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin  text-blue-500">
-          <Loader2 />
+        <div className="text-center">
+          <p>Please log in to view your profile.</p>
+          <Button 
+            onClick={() => router.push('/login')}
+            className="mt-4"
+          >
+            Go to Login
+          </Button>
         </div>
       </div>
     );
@@ -92,14 +115,14 @@ function UserInfo({ user }: { user: User }) {
       <CardContent className="pt-6">
         <div className="flex flex-col items-center">
           <Avatar className="w-24 h-24 mb-4">
-            <AvatarImage src={user?.profilePicUrl || ''} alt={user?.fullname || 'User'} />
-            <AvatarFallback>{user?.fullname?.charAt(0) || 'U'}</AvatarFallback>
+            <AvatarImage src={user.profilePicUrl || ''} alt={user.fullname || 'User'} />
+            <AvatarFallback>{user.fullname ? user.fullname.charAt(0) : 'U'}</AvatarFallback>
           </Avatar>
-          <h2 className="text-2xl font-bold">{user?.fullname || 'Unknown User'}</h2>
-          <p className="text-muted-foreground">@{user?.username || 'unknown'}</p>
-          <p className="mt-2 text-center">{user?.bio || "No bio available"}</p>
+          <h2 className="text-2xl font-bold">{user.fullname || 'Unknown User'}</h2>
+          <p className="text-muted-foreground">@{user.username || 'unknown'}</p>
+          <p className="mt-2 text-center">{user.bio || "No bio available"}</p>
           <p className="mt-2 text-center">
-            Last Online: {user?.history?.[user.history.length - 1]?.testPlayed ? new Date(user.history[user.history.length - 1].testPlayed).toLocaleString() : 'No data available'}
+            Last Online: {user.history && user.history.length > 0 ? new Date(user.history[user.history.length - 1].testPlayed).toLocaleString() : 'No data available'}
           </p>
         </div>
       </CardContent>
