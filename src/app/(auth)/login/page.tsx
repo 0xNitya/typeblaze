@@ -10,6 +10,20 @@ import { useRouter } from 'next/navigation'
 import useAuthStore from '@/store/useStore' 
 import toast, { Toaster } from 'react-hot-toast';
 
+// Define interface for the API response
+interface LoginResponse {
+  message: string;
+  success: boolean;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    isPremium: boolean;
+    token: string;
+  };
+  token: string;
+}
+
 export default function LoginPage() {
 
   const router = useRouter();
@@ -34,7 +48,7 @@ export default function LoginPage() {
     setLoading(true); 
 
     try {
-      const response = await axios.post('/api/login', user);
+      const response = await axios.post<LoginResponse>('/api/login', user);
       const userData = response.data.user; 
       login(userData); 
       toast.success('Logged in successfully');
