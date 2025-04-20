@@ -24,6 +24,21 @@ interface User {
   // Add more fields if necessary
 }
 
+// Define interface for the API response
+interface UserMeResponse {
+  success: boolean;
+  data: {
+    user: {
+      id: string;
+      fullname: string;
+      email: string;
+      username: string;
+      isPremium: boolean;
+      premiumSince?: string;
+    }
+  }
+}
+
 // Create the zustand store with type annotations and persist middleware
 const useAuthStore = create(
   persist<AuthState>(
@@ -45,7 +60,7 @@ const useAuthStore = create(
       refreshUserData: async () => {
         try {
           if (get().isAuthenticated && get().user?.token) {
-            const response = await axios.get('/api/user/me');
+            const response = await axios.get<UserMeResponse>('/api/user/me');
             if (response.data.success && response.data.data.user) {
               const userData = response.data.data.user;
               // Update user data but keep the token
