@@ -25,9 +25,15 @@ type User = {
   achievement: string[];
 }
 
+// Define interface for the API response
+interface ProfileResponse {
+  message: string;
+  user: User;
+}
+
 async function getProfileData(username: string): Promise<User | null> {
   try {
-    const response = await axios.get(`/api/player-profile?username=${username}`);
+    const response = await axios.get<ProfileResponse>(`/api/player-profile?username=${username}`);
     toast.success('Profile fetched successfully');
     return response.data.user;
   } catch (error) {
