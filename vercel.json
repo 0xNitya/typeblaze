@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "env": {
+    "MONGODB_URL": "@mongodb_url",
+    "TOKEN_SECRET": "@token_secret",
+    "RAZORPAY_KEY_ID": "@razorpay_key_id",
+    "RAZORPAY_KEY_SECRET": "@razorpay_key_secret",
+    "NEXT_PUBLIC_RAZORPAY_KEY_ID": "@next_public_razorpay_key_id"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_RAZORPAY_KEY_ID": "@next_public_razorpay_key_id"
+    }
+  }
+} 

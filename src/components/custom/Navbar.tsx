@@ -4,34 +4,73 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { ArrowRight, Menu } from 'lucide-react'
+import { ArrowRight, Menu, Crown, ChevronDown, Code } from 'lucide-react'
 import useAuthStore from '@/store/useStore'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { ModeToggle } from './ModeToggle'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
-const NavItems = () => (
-  <>
-    <Link href="/playground" className="text-gray-600 dark:text-gray-200 hover:text-gray-900 transition-colors">
-      Play Now
-    </Link>
-    <Link href="/lobby" className="text-gray-600 dark:text-gray-200 hover:text-gray-900 transition-colors">
-      Play with friends
-    </Link>
-    <Link href='/subscription' className="text-gray-600 dark:text-gray-200 hover:text-gray-900 transition-colors">
-      Pricing
-    </Link>
-    <Link href='/leaderboard' className="text-gray-600 dark:text-gray-200 hover:text-gray-900 transition-colors">
-      leaderboard
-    </Link>
-    <ModeToggle />
-    
-  </>
-)
+const NavItems = () => {
+  const { isPremium } = useAuthStore();
+  
+  return (
+    <>
+      <Link href="/playground" className="text-gray-600 dark:text-gray-200 hover:text-gray-900 transition-colors">
+        Play Now
+      </Link>
+      <Link href="/lobby" className="text-gray-600 dark:text-gray-200 hover:text-gray-900 transition-colors">
+        Play with friends
+      </Link>
+      {isPremium ? (
+        <DropdownMenu>
+          <DropdownMenuTrigger className="flex items-center text-gray-600 dark:text-gray-200 hover:text-gray-900 transition-colors">
+            <Crown className="h-4 w-4 mr-1 text-yellow-500" />
+            Premium
+            <ChevronDown className="h-4 w-4 ml-1" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>
+              <Link href="/premium/themes" className="w-full">Custom Themes</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href="/premium/stats" className="w-full">Advanced Stats</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href="/premium/custom-texts" className="w-full">Custom Texts</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href="/premium/challenges" className="w-full">Daily Challenges</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href="/premium/leetcode" className="w-full flex items-center">
+                <Code className="h-4 w-4 mr-1 text-blue-500" />
+                LeetCode Tracker
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <Link href='/subscription' className="text-gray-600 dark:text-gray-200 hover:text-gray-900 transition-colors">
+          Pricing
+        </Link>
+      )}
+      <Link href='/leaderboard' className="text-gray-600 dark:text-gray-200 hover:text-gray-900 transition-colors">
+        leaderboard
+      </Link>
+      <ModeToggle />
+    </>
+  )
+}
 
 export function Navbar() {
   const router = useRouter();
-  const { isAuthenticated, logout,user } = useAuthStore()
+  const { isAuthenticated, logout, user, isPremium } = useAuthStore()
   const [isOpen, setIsOpen] = useState(false)
   
   const handleLogout = async () => {

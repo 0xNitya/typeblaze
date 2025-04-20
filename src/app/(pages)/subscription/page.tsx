@@ -6,16 +6,25 @@ import axios from "axios";
 import useAuthStore from "@/store/useStore";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AlertCircle, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function SubscriptionPage() {
   const [productId, setProductId] = useState("subscription");
   const [varient, setVarient] = useState("lifetime");
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, isPremium, upgradeToPremium } = useAuthStore();
   const [isHovered, setIsHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
+
+  // Check if user is premium and redirect if necessary
+  useEffect(() => {
+    if (isAuthenticated && isPremium) {
+      router.push('/premium/themes');
+    }
+  }, [isAuthenticated, isPremium, router]);
 
   // Load Razorpay script
   useEffect(() => {
@@ -64,7 +73,16 @@ export default function SubscriptionPage() {
       }
 
       // Step 1: Create order on the backend
-      const res = await axios.post("/api/orders", { productId, varient });
+      const res = await axios.post<{
+        razorpayOrder: {
+          id: string;
+          amount: number;
+          currency: string;
+        };
+        order: {
+          id: string;
+        };
+      }>("/api/orders", { productId, varient });
 
       if (!res.data.razorpayOrder || !res.data.razorpayOrder.id) {
         throw new Error("Failed to create payment order. Please try again.");
@@ -80,17 +98,37 @@ export default function SubscriptionPage() {
         name: "TypeBlaze",
         description: "Lifetime Subscription",
         order_id: razorpayOrder.id,
+        prefill: {
+          name: "Nityanand Yadav",
+          contact: "6203439160"
+        },
         handler: async (response: any) => {
           try {
-            const verificationRes = await axios.post("/api/verify-payment", {
+            const verificationRes = await axios.post<{
+              success: boolean;
+            }>("/api/verify-payment", {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
             });
 
             if (verificationRes.data.success) {
-              alert("Payment Successful! Subscription Activated.");
-              window.location.reload();
+              // Upgrade user to premium status in the store
+              upgradeToPremium();
+              
+              // Update user's premium status on the server
+              try {
+                await axios.post("/api/user/upgrade-premium", {
+                  orderId: order.id,
+                  paymentId: response.razorpay_payment_id,
+                });
+              } catch (updateError) {
+                console.error("Error updating premium status:", updateError);
+                // Continue anyway since we've already set the local state
+              }
+              
+              alert("Payment Successful! Premium Features Activated.");
+              router.push('/premium/themes');
             } else {
               setErrorMessage("Payment verification failed. Please contact support.");
             }
@@ -131,31 +169,42 @@ export default function SubscriptionPage() {
     }
   };
 
+  // Show loading while checking premium status
+  if (isAuthenticated && isPremium) {
+    return (
+      <div className="min-h-screen bg-gray-100 dark:bg-background flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+        <p className="ml-2">Redirecting to premium features...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-background flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">
-          Join TypeBlaze
+          Join TypeBlaze Premium
         </h1>
         <Card className="w-full bg-white dark:bg-gray-800 shadow-lg">
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-center text-blue-500">
-              Lifetime Access
+              Lifetime Premium Access
             </CardTitle>
             <CardDescription className="text-center text-gray-600 dark:text-gray-300">
-              Unlock all features forever
+              Unlock all premium features forever
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-center">
-              <span className="text-5xl font-bold text-gray-800 dark:text-gray-100">INR 9</span>
+              <span className="text-5xl font-bold text-gray-800 dark:text-gray-100">INR 49</span>
               <span className="text-gray-600 dark:text-gray-300"> / one-time</span>
             </div>
             <ul className="mt-6 space-y-2">
               {[
-                "Unlimited typing tests",
-                "Advanced statistics",
-                "Custom test creation",
+                "Custom typing themes",
+                "Advanced statistics dashboard",
+                "Custom text creation",
+                "Daily challenges and rewards",
                 "Ad-free experience",
                 "Priority support",
               ].map((feature, index) => (
@@ -183,7 +232,8 @@ export default function SubscriptionPage() {
             {isAuthenticated ? (
               <Button
                 onClick={handleCheckOut}
-                className="w-full rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 transition duration-300"
+                variant="premium"
+                className="w-full rounded-lg font-bold py-2 px-4"
                 disabled={isLoading || !razorpayLoaded}
               >
                 {isLoading ? (
@@ -191,7 +241,7 @@ export default function SubscriptionPage() {
                 ) : !razorpayLoaded ? (
                   "Loading Payment Gateway..."
                 ) : (
-                  "Get Lifetime Access"
+                  "Get Premium Access"
                 )}
               </Button>
             ) : (
@@ -203,14 +253,18 @@ export default function SubscriptionPage() {
                       onMouseEnter={() => setIsHovered(true)}
                       onMouseLeave={() => setIsHovered(false)}
                     >
-                      <Button disabled className="w-full rounded-lg bg-blue-500 text-white font-bold py-2 px-4 cursor-not-allowed">
-                        Get Lifetime Access
+                      <Button 
+                        disabled 
+                        variant="premium"
+                        className="w-full rounded-lg font-bold py-2 px-4 cursor-not-allowed"
+                      >
+                        Get Premium Access
                       </Button>
                     </div>
                   </TooltipTrigger>
                   <TooltipContent side="top">
                     <div className="flex items-center">
-                      <AlertCircle className="mr-2 h-4 w-4 text-yellow-500" />
+                      <AlertCircle className="mr-2 h-4 w-4 text-blue-500" />
                       <span>Please log in first to proceed</span>
                     </div>
                   </TooltipContent>

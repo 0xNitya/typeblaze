@@ -75,7 +75,7 @@ export async function POST(request: NextRequest)
         let order;
         try {
             order = await razorpay.orders.create({
-                amount: 9 * 100, // Convert ₹9 to paisa
+                amount: 49 * 100, // Convert ₹49 to paisa
                 currency: 'INR',
                 receipt: `receipt-${Date.now()}`,
                 notes: {
@@ -110,7 +110,7 @@ export async function POST(request: NextRequest)
                 }],
                 orderDate: new Date(),
                 status: 'pending',
-                amount: 9,
+                amount: 49,
                 paymentMethod: 'razorpay',
                 paymentStatus: 'pending',
                 paymentDate: new Date(),

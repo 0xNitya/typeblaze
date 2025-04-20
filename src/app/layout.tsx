@@ -6,6 +6,7 @@ import { Navbar } from "@/components/custom/Navbar";
 import { Footer } from "@/components/custom/Footer";
 import { ThemeProvider } from '@/components/theme-providers';
 import Script from 'next/script';
+import { PremiumStatusCheck } from '@/components/PremiumStatusCheck';
 
 
 
@@ -49,7 +50,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
         <Navbar />
-        
+        <PremiumStatusCheck />
         {children}
         <Footer />
         <Analytics />

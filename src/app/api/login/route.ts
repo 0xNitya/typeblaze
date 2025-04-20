@@ -48,11 +48,12 @@ export async function POST(request: NextRequest) {
             id: existingUser?._id,
             name: existingUser?.fullname,
             email: existingUser?.email,
+            isPremium: existingUser?.isPremium || false,
             token,
         };
 
         const response = NextResponse.json(
-            { message: "Login successful", success: true,user, token },
+            { message: "Login successful", success: true, user, token },
             { status: 200 }
         );
 

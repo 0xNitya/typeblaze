@@ -14,6 +14,8 @@ export interface IUser extends mongoose.Document {
     profilePicUrl:string;
     country : string;
     lastActive : Date;
+    isPremium: boolean;
+    premiumSince?: Date;
     history : {
         speed : number,
         accuracy : number,
@@ -83,6 +85,13 @@ const userSchema = new mongoose.Schema<IUser>({
     lastActive: {
         type: Date,
         default: Date.now,
+    },
+    isPremium: {
+        type: Boolean,
+        default: false,
+    },
+    premiumSince: {
+        type: Date,
     },
     history: {
     type : [{
