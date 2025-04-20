@@ -33,7 +33,7 @@ export default function LeaderboardPage() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const res = await axios.get('/api/leaderboard')
+        const res = await axios.get<LeaderboardResponse>('/api/leaderboard')
         toast.success('Leaderboard fetched successfully')
         setLeaderboard(res.data)
       } catch (err) {
