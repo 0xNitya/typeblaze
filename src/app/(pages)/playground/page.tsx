@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Clock, Trophy, Target, AlertTriangle, Sun, Moon } from 'lucide-react'
@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { useSearchParams, useRouter } from "next/navigation"
 import useAuthStore from "@/store/useStore"
 import { useTheme } from "next-themes"
+import { Skeleton } from "@/components/ui/skeleton"
 
 interface ThemeColors {
   background: string;
@@ -76,7 +77,33 @@ const premiumDarkTheme: ThemeColors = {
   currentWord: "#89B4FA",
 }
 
-export default function TypingTest() {
+// Loading fallback component
+function TypingTestLoading() {
+  return (
+    <div className="container mx-auto p-4 space-y-6">
+      <div className="flex justify-between items-center">
+        <Skeleton className="h-10 w-24" />
+        <div className="flex gap-2">
+          {[1, 2, 3].map((_, i) => (
+            <Skeleton key={i} className="h-10 w-16" />
+          ))}
+        </div>
+      </div>
+      <Card>
+        <CardContent className="p-6">
+          <Skeleton className="h-[300px] w-full" />
+        </CardContent>
+      </Card>
+      <div className="flex justify-between">
+        <Skeleton className="h-10 w-40" />
+        <Skeleton className="h-10 w-40" />
+      </div>
+    </div>
+  )
+}
+
+// Main component
+function TypingTest() {
   const [timeLeft, setTimeLeft] = useState<number>(DEFAULT_TIME)
   const [selectedTime, setSelectedTime] = useState<number>(DEFAULT_TIME)
   const [isTestRunning, setIsTestRunning] = useState<boolean>(false)
@@ -542,5 +569,14 @@ export default function TypingTest() {
       <Toaster position="bottom-right" reverseOrder={false} />
     </div>
   )
+}
+
+// Wrap with Suspense boundary for the export
+export default function TypingTestPage() {
+  return (
+    <Suspense fallback={<TypingTestLoading />}>
+      <TypingTest />
+    </Suspense>
+  );
 }
 
