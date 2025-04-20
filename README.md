@@ -5,6 +5,7 @@
 ## Table of Contents  
 
 - [Features](#features)  
+- [Premium Features](#premium-features)
 - [Getting Started](#getting-started)  
 - [Installation](#installation)  
 - [How to Play](#how-to-play)  
@@ -19,8 +20,18 @@
 - **Typing Speed & Accuracy**: Monitor Words Per Minute (WPM) and accuracy stats.  
 - **Leaderboard**: Compare scores with players worldwide.  
 - **Custom Game Rooms**: Create personalized rooms with custom settings.  
-- **Authentication**: Sign up, log in, log out, and password reset (planned).  
+- **Authentication**: Sign up, log in, log out functionality.  
 - **Mobile & Desktop Friendly**: Fully responsive UI for all devices.  
+- **Premium Subscription**: Upgrade to premium for additional features.
+
+## Premium Features
+
+- **Custom Themes**: Personalize your typing experience with custom color themes.
+- **Advanced Statistics**: Detailed analytics of your typing performance over time.
+- **Custom Typing Texts**: Create and practice with your own custom typing texts.
+- **Daily Challenges**: Participate in daily typing challenges with rewards.
+- **Ad-Free Experience**: Enjoy TypeBlaze without any advertisements.
+- **Priority Support**: Get faster assistance for any issues.
 
 ## Upcoming Features  
 
@@ -30,7 +41,6 @@
 - **Achievements & Rewards**: Unlock achievements to engage users.  
 - **Friends & Chat**: Add friends and chat with them.  
 - **Notifications**: Stay updated with in-game events.  
-- **Shop**: Purchase premium features (TBD).  
 
 ## Getting Started  
 
@@ -68,6 +78,7 @@ Ensure you have the following installed:
 2. **Start Typing**: Type the given text as fast and accurately as possible.  
 3. **Live Scoreboard**: Monitor your WPM and accuracy in real time.  
 4. **Win the Game**: The fastest and most accurate typist wins!  
+5. **Upgrade to Premium**: Purchase a premium subscription to unlock additional features.
 
 ## Contributing  
 
@@ -100,10 +111,17 @@ Want to contribute? Follow these steps:
 - **Socket.io** - Enables real-time communication.  
 - **Tailwind CSS** - Utility-first CSS for styling.  
 - **React** - JavaScript library for UI components.  
+- **MongoDB** - Database for user profiles and statistics.
+- **Mongoose** - ODM for MongoDB interaction.
+- **Next-Auth** - Authentication solution.
+- **Zustand** - State management.
+- **Razorpay** - Payment gateway for premium subscriptions.
 - **Vercel** - Hosting and deployment platform.  
 
 ## Deployment  
 
-- **Frontend**: Deployed on **Vercel**.  
+- **Frontend & API**: Deployed on **Vercel**.  
 - **Backend**: Uses **Express.js** and **Socket.io** (hosting options under consideration).  
 - **Authentication**: Implemented using **Next.js API Routes** (`api/route.ts`).  
+- **Database**: MongoDB Atlas for data storage.
+- **Payments**: Integrated with Razorpay for secure payment processing.
