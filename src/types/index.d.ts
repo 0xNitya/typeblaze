@@ -12,21 +12,6 @@ declare global {
   }
 }
 
-// For Badge component
-declare module '@/components/ui/badge' {
-  import { VariantProps } from 'class-variance-authority';
-  
-  const badgeVariants: (props?: any) => string;
-  
-  export interface BadgeProps
-    extends React.HTMLAttributes<HTMLDivElement>,
-      VariantProps<typeof badgeVariants> {
-    variant?: 'default' | 'secondary' | 'destructive' | 'outline';
-  }
-  
-  export function Badge(props: BadgeProps): JSX.Element;
-}
-
 // For Tailwind CSS
 declare module 'tailwind-merge' {
   export function twMerge(...classLists: string[]): string;
