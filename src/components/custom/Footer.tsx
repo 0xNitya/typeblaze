@@ -42,7 +42,9 @@ export function Footer() {
           <p>&copy; {new Date().getFullYear()} TypeBlaze. All rights reserved.</p>
           <p className="mt-2">
             Designed and Developed with ❤️ by{' '}
-            <a href="https://github.com/Nityanand17" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Nityanand</a>
+            <a href="https://github.com/0xNitya" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Nityanand</a>{' '}
+            <a href="https://github.com/AkashB-24" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Akash</a>{' '}
+            <a href="https://github.com/chandhu2004" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Chandhu</a>
             {' '}
            
           </p>
