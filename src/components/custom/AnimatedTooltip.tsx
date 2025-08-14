@@ -18,7 +18,7 @@ const people = [
   },
   {
     id: 3,
-    name: "Gayathri Potluri",
+    name: "Alpana Singh",
     designation: "Data Scientist",
     image:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
@@ -39,7 +39,7 @@ const people = [
   },
   {
     id: 6,
-    name: "Dora",
+    name: "Valentina Rossi",
     designation: "The Explorer",
     image:
       "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
